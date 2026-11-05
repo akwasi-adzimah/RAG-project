@@ -1,0 +1,25 @@
+# stress_test.py - verbatim output of two runs
+# Run: 2026-10-01. Levels 1, 3, 5 concurrent requests (ThreadPoolExecutor).
+# Command: ANTHROPIC_LOG=info .venv/bin/python stress_test.py
+# SDK logging was enabled so that silent automatic retries of 429/529 would be visible.
+
+## Run 1
+Concurrency=1: success=1/1, avg_latency=3.03s, wall_time=3.03s
+Concurrency=3: success=3/3, avg_latency=3.78s, wall_time=5.56s
+Concurrency=5: success=5/5, avg_latency=4.65s, wall_time=6.50s
+exit code: 0
+API requests logged: 9  ->  9 x "HTTP/1.1 200 OK"
+retries / 429 / 529 / tracebacks: none
+
+## Run 2
+Concurrency=1: success=1/1, avg_latency=3.61s, wall_time=3.61s
+Concurrency=3: success=3/3, avg_latency=5.68s, wall_time=8.34s
+Concurrency=5: success=5/5, avg_latency=5.37s, wall_time=7.64s
+exit code: 0
+API requests logged: 9  ->  9 x "HTTP/1.1 200 OK"
+retries / 429 / 529 / tracebacks: none
+
+## Sequential baseline for the same questions (from performance_results.txt)
+Level 1 (supported_01):            3.33 s
+Level 3 (supported_01..03) avg:    4.23 s
+Level 5 (supported_01..05) avg:    3.66 s  (sum 18.31 s if run one after another)

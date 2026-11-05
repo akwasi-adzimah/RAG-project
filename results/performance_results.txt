@@ -1,0 +1,27 @@
+# performance_test.py - verbatim output
+# Run: 2026-10-01, sequential, first 10 questions of test_cases.json
+# Model: claude-opus-5 (effort medium), retrieval: hybrid + rerank, k=6
+# Command: .venv/bin/python performance_test.py
+# Q-to-case mapping: Q1 supported_01, Q2 supported_02, Q3 supported_03, Q4 supported_04,
+#   Q5 supported_05, Q6 paraphrase_01, Q7 paraphrase_02, Q8 ambiguous_01,
+#   Q9 unsupported_01, Q10 adversarial_01
+# Note: Q1 also includes loading the cached index + local models (~1 s cold start).
+
+Q1: 3.33 seconds
+Q2: 7.09 seconds
+Q3: 2.28 seconds
+Q4: 2.38 seconds
+Q5: 3.23 seconds
+Q6: 2.95 seconds
+Q7: 5.82 seconds
+Q8: 9.41 seconds
+Q9: 2.08 seconds
+Q10: 8.07 seconds
+
+--- Performance Summary ---
+Requests: 10
+Failures: 0
+Minimum: 2.08s
+Average: 4.66s
+Median:  3.28s
+Maximum: 9.41s

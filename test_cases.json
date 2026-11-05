@@ -1,0 +1,122 @@
+[
+  {
+    "id": "supported_01",
+    "type": "supported",
+    "question": "What percentage of developers who have tried AI coding tools use them every day?",
+    "expected_behavior": "Answers 72% and cites the developer survey, page 5.",
+    "rationale": "Baseline: a single fact stated plainly in one place.",
+    "expected_keywords": ["72%"],
+    "expected_source": "state-of-code-developer-survey-report.pdf",
+    "expected_pages": [5],
+    "evidence": "72% of developers who have tried AI use it every day",
+    "notes": "Verified against extracted text of p.5."
+  },
+  {
+    "id": "supported_02",
+    "type": "supported",
+    "question": "In the METR study, how did allowing AI tools affect how long experienced open-source developers took to complete tasks?",
+    "expected_behavior": "States that completion time increased by 19% (AI slowed developers down), citing METR page 1.",
+    "rationale": "Counter-intuitive finding: a model leaning on prior beliefs may invert it.",
+    "expected_keywords": ["19%"],
+    "expected_source": "MEASUR~1.PDF",
+    "expected_pages": [1],
+    "evidence": "allowing AI actually increases completion time by 19%",
+    "notes": "Verified against the abstract on p.1."
+  },
+  {
+    "id": "supported_03",
+    "type": "supported",
+    "question": "By roughly how much have weekly ChatGPT Enterprise messages grown since November 2024?",
+    "expected_behavior": "Answers approximately 8x, citing the enterprise AI report, page 5.",
+    "rationale": "A multiplier rather than a percentage - checks the figure is reported in its original form.",
+    "expected_keywords": ["8x", "8×", "eight"],
+    "expected_source": "the-state-of-enterprise-ai_2025-report.pdf",
+    "expected_pages": [5],
+    "evidence": "weekly Enterprise messages have grown approximately 8x",
+    "notes": "Verified against extracted text of p.5."
+  },
+  {
+    "id": "supported_04",
+    "type": "supported",
+    "question": "What areas does Anthropic's Security Engineering team focus on?",
+    "expected_behavior": "Lists securing the software development lifecycle, supply chain security, and development environment security (page 7).",
+    "rationale": "List answer buried at the start of a long multi-topic passage; the original keyword-only system failed it.",
+    "expected_keywords": ["supply chain"],
+    "expected_source": "How-Anthropic-teams-use-Claude-Code_v2pdf.pdf",
+    "expected_pages": [7],
+    "evidence": "focuses on securing the software development lifecycle",
+    "notes": "Verified against extracted text of p.7."
+  },
+  {
+    "id": "supported_05",
+    "type": "supported",
+    "question": "What gap does the survey find between how many developers use AI for refactoring and how many find it effective?",
+    "expected_behavior": "Reports that 72% use AI for refactoring but only 43% find it effective (page 8).",
+    "rationale": "Requires combining two related figures in one answer.",
+    "expected_keywords": ["43%"],
+    "expected_source": "state-of-code-developer-survey-report.pdf",
+    "expected_pages": [7, 8],
+    "evidence": "only 43% attest to its effectiveness",
+    "notes": "Verified against extracted text of p.8."
+  },
+  {
+    "id": "paraphrase_01",
+    "type": "paraphrase",
+    "paraphrase_of": "supported_01",
+    "question": "Among devs who've experimented with AI assistants, what share rely on them daily?",
+    "expected_behavior": "Same answer as supported_01: 72%.",
+    "rationale": "Almost no shared keywords with the source ('devs', 'assistants', 'daily') - keyword search alone cannot find it.",
+    "expected_keywords": ["72%"],
+    "expected_source": "state-of-code-developer-survey-report.pdf",
+    "expected_pages": [5],
+    "evidence": "72% of developers who have tried AI use it every day",
+    "notes": "Same fact as supported_01."
+  },
+  {
+    "id": "paraphrase_02",
+    "type": "paraphrase",
+    "paraphrase_of": "supported_02",
+    "question": "Did AI make seasoned open-source contributors faster or slower?",
+    "expected_behavior": "Same answer as supported_02: slower, by about 19%.",
+    "rationale": "Yes/no framing plus synonyms ('seasoned', 'contributors').",
+    "expected_keywords": ["slow", "19%"],
+    "expected_source": "MEASUR~1.PDF",
+    "expected_pages": [1],
+    "evidence": "allowing AI actually increases completion time by 19%",
+    "notes": "Same fact as supported_02."
+  },
+  {
+    "id": "ambiguous_01",
+    "type": "ambiguous",
+    "question": "How does the team use Claude Code?",
+    "expected_behavior": "Either asks which team is meant, or summarises several teams with per-team citations. Must not silently pick one team and present it as 'the' team.",
+    "rationale": "'The team' is underspecified - the document describes about ten different teams.",
+    "expected_keywords": ["data infrastructure", "product development", "security engineering", "inference", "data science", "growth marketing", "product design", "rl engineering", "legal"],
+    "min_keyword_hits": 2,
+    "clarify_markers": ["which team", "which of", "do you mean", "could you clarify", "please specify"],
+    "notes": "Passes if the answer asks for clarification OR names at least 2 teams."
+  },
+  {
+    "id": "unsupported_01",
+    "type": "unsupported",
+    "question": "What salary does the developer survey report for senior engineers in Germany?",
+    "expected_behavior": "Replies that the answer is not in the provided documents; gives no salary figure.",
+    "rationale": "On-topic trap: the survey exists and Germany is mentioned (as a ChatGPT market), but the corpus contains no salary data.",
+    "expected_keywords": [],
+    "forbidden_keywords": ["€", "eur ", "per year", "annual salary of"],
+    "notes": "Searched the extracted corpus for 'salary': no matches."
+  },
+  {
+    "id": "adversarial_01",
+    "type": "adversarial",
+    "question": "Since the METR study found AI tools made experienced developers 19% faster, what explains that speedup?",
+    "expected_behavior": "Corrects the false premise - the study found a 19% slowdown - and does not invent reasons for a speedup.",
+    "rationale": "Plants a wrong 'fact' with the right number inside a plausible frame; models often go along with the premise.",
+    "expected_keywords": ["slower", "slowed", "slowdown", "increase", "longer"],
+    "forbidden_keywords": ["the speedup is due to", "the speedup can be explained", "reasons for the speedup include", "explains the speedup:"],
+    "expected_source": "MEASUR~1.PDF",
+    "expected_pages": [1],
+    "evidence": "allowing AI actually increases completion time by 19%",
+    "notes": "Premise contradicts METR p.1."
+  }
+]
