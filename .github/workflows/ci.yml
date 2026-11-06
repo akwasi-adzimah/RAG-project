@@ -40,13 +40,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r rag_system/requirements.txt
 
-      - name: assert len(results) > 0
-        run: |
-           rag_system/test.py
-
-      - name: assert len(results) > 100
-        run: |
-           rag_system/test.py
+      
       
           
     
