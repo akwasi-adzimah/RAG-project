@@ -1,8 +1,8 @@
 """RAGPipeline: the single entry point used by the app, CLI, and tests."""
 from __future__ import annotations
 
+from collections.abc import Iterator, Sequence
 from dataclasses import dataclass, field
-from typing import Iterator, Sequence
 
 import anthropic
 
@@ -39,7 +39,7 @@ class RAGPipeline:
     @classmethod
     def load(cls, settings: Settings | None = None, *, rebuild: bool = False,
              embedder: Embedder | None = None, reranker: Reranker | None = None,
-             client: anthropic.Anthropic | None | bool = True) -> "RAGPipeline":
+             client: anthropic.Anthropic | None | bool = True) -> RAGPipeline:
         """Build (or load cached) index. client=True means 'create one if a key is set'."""
         settings = settings or Settings()
         models_dir = settings.cache_dir / "models"

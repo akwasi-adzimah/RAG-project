@@ -1,7 +1,14 @@
 """Extraction clean-up and chunking."""
+from itertools import pairwise
+
 from docx import Document
 
-from rag_system.documents import chunk_text, clean_page_text, load_corpus, split_sentences
+from rag_system.documents import (
+    chunk_text,
+    clean_page_text,
+    load_corpus,
+    split_sentences,
+)
 
 
 def test_clean_page_text_drops_duplicated_long_lines():
@@ -27,7 +34,7 @@ def test_chunks_respect_size_and_overlap():
     assert len(chunks) > 1
     assert all(len(c.split()) <= 50 for c in chunks)
     # Each chunk after the first starts with the last sentences of the previous one.
-    for prev, nxt in zip(chunks, chunks[1:]):
+    for prev, nxt in pairwise(chunks):
         assert prev.split(". ")[-1].rstrip(".") in nxt
     # Nothing is lost.
     joined = " ".join(chunks)

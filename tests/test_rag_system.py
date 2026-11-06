@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+
 import pytest
 
 from rag_system.evaluate import grade

@@ -179,7 +179,7 @@ def load_corpus(docs_dir: Path, chunk_words: int, overlap_words: int) -> Corpus:
     for path in source_files(docs_dir):
         try:
             pages = extract_file(path)
-        except Exception as exc:  # corrupt / encrypted files shouldn't sink the whole index
+        except Exception as exc:  # noqa: BLE001 - corrupt / encrypted files shouldn't sink the whole index
             log.warning("Could not read %s: %s", path.name, exc)
             skipped.append(path.name)
             continue

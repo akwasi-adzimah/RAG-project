@@ -30,7 +30,7 @@ INDEX_VERSION = 3  # bump when chunking/cleaning logic changes
 
 _TOKEN = re.compile(r"[a-z0-9]+(?:[.%][0-9]+)?%?")
 _STOPWORDS = frozenset(
-    "a an and are as at be by can do does for from has have how i in is it its of on or "
+    "a an and are as at be by can do does for from has have how i in is it its of on or "  # noqa: SIM905
     "that the their them there these they this to was were what when where which who why "
     "will with you your".split()
 )

@@ -1,8 +1,9 @@
 """Local text embeddings (no API key, runs on CPU via ONNX)."""
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Protocol, Sequence
+from typing import Protocol
 
 import numpy as np
 
@@ -29,7 +30,7 @@ class Reranker(Protocol):
 def _load(cls, model_name: str, cache_dir: Path):
     try:  # skip the Hugging Face network check once the model is on disk
         return cls(model_name, cache_dir=str(cache_dir), local_files_only=True)
-    except Exception:
+    except Exception:  # noqa: BLE001 - not cached yet (or cache broken): download
         return cls(model_name, cache_dir=str(cache_dir))
 
 

@@ -1,8 +1,12 @@
 """Pipeline + generator behaviour, using a fake Claude client (no API calls)."""
 import pytest
 
-from rag_system.generator import (NOT_FOUND, build_messages, cited_numbers,
-                                  format_excerpts)
+from rag_system.generator import (
+    NOT_FOUND,
+    build_messages,
+    cited_numbers,
+    format_excerpts,
+)
 from rag_system.pipeline import NO_API_KEY, NO_RESULTS, RAGPipeline
 
 from .conftest import FakeClient
@@ -100,7 +104,7 @@ def test_cited_numbers_order():
 
 # --- the e2e answer oracle (rag_system.evaluate.grade) -----------------------
 
-from rag_system.evaluate import grade  # noqa: E402
+from rag_system.evaluate import grade
 
 AMBIGUOUS = {"id": "a", "type": "ambiguous", "min_keyword_hits": 2,
              "expected_keywords": ["legal", "inference", "growth marketing"],

@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import re
+from collections.abc import Iterator, Sequence
 from html import escape
-from typing import Iterator, Sequence
 
 import anthropic
 

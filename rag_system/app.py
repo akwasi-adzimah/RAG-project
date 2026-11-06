@@ -5,18 +5,18 @@ import json
 import sys
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-import anthropic  # noqa: E402
-import streamlit as st  # noqa: E402
+import anthropic
+import streamlit as st
 
-from rag_system.config import PROJECT_ROOT  # noqa: E402
-from rag_system.generator import cited_numbers, friendly_error  # noqa: E402
-from rag_system.index import SearchResult  # noqa: E402
-from rag_system.pipeline import RAGPipeline  # noqa: E402
+from rag_system.config import PROJECT_ROOT
+from rag_system.generator import cited_numbers, friendly_error
+from rag_system.index import SearchResult
+from rag_system.pipeline import RAGPipeline
 
 st.set_page_config(page_title="Document Q&A", page_icon="📚", layout="centered")
 
@@ -61,7 +61,7 @@ def log_feedback(pipeline: RAGPipeline, msg: dict) -> None:
     if rating is None:
         return
     record = {
-        "time": datetime.now(timezone.utc).isoformat(),
+        "time": datetime.now(UTC).isoformat(),
         "rating": "up" if rating == 1 else "down",
         "question": msg["question"],
         "answer": msg["content"],

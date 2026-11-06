@@ -8,8 +8,8 @@ from pathlib import Path
 if __package__ in (None, ""):  # allow `python rag_system/test_adapter.py`
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from rag_system.index import SearchResult  # noqa: E402
-from rag_system.pipeline import RAGPipeline  # noqa: E402
+from rag_system.index import SearchResult
+from rag_system.pipeline import RAGPipeline
 
 
 @lru_cache(maxsize=1)

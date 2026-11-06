@@ -58,7 +58,7 @@ def test_build_index_uses_cache_until_files_change(tmp_path, embedder):
     calls = []
     original = embedder.embed_documents
     embedder.embed_documents = lambda texts: calls.append(len(texts)) or original(texts)
-    kwargs = dict(chunk_words=200, overlap_words=40)
+    kwargs = {"chunk_words": 200, "overlap_words": 40}
 
     first = build_index(docs, cache, embedder, **kwargs)
     second = build_index(docs, cache, embedder, **kwargs)
