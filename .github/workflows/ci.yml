@@ -1,5 +1,7 @@
 name: RAG Chatbot CI
 
+
+
 on:
   push:
     branches: [main]
@@ -8,6 +10,8 @@ on:
 
 permissions:
   contents: read
+
+
 
 jobs:
   test:
@@ -36,6 +40,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r rag_system/requirements.txt
 
+      - name: assert len(results) > 0
+        run: |
+          python rag_system/test.py
+
+      - name: assert len(results) > 100
+        run: |
+          python rag_system/test.py
+      
+          
+    
       # End-to-end tests skip automatically when ANTHROPIC_API_KEY is not set,
       # so CI runs only the offline tests and never spends API credits.
       - name: Run tests
