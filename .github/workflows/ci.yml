@@ -1,0 +1,42 @@
+name: RAG Chatbot CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: rag_system/requirements.txt
+
+      # The local embedding + reranker models (~150 MB) download from Hugging Face
+      # on first use; caching avoids re-downloading (and HF rate limits) every run.
+      - name: Cache embedding and reranker models
+        uses: actions/cache@v5
+        with:
+          path: rag_system/.cache/models
+          key: rag-models-${{ hashFiles('rag_system/config.py') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r rag_system/requirements.txt
+
+      # End-to-end tests skip automatically when ANTHROPIC_API_KEY is not set,
+      # so CI runs only the offline tests and never spends API credits.
+      - name: Run tests
+        run: pytest -v
