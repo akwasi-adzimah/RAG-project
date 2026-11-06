@@ -40,6 +40,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r rag_system/requirements.txt
 
+
+      - name: Install Ruff
+        run: 
+          pip install ruff
+
+      - name: check code quality
+        run: 
+          ruff check .
+
+
+        
+
       
       
           
