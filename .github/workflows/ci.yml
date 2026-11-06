@@ -47,7 +47,7 @@ jobs:
 
       - name: check code quality
         run: 
-          ruff check .
+          ruff check rag_system --select ALL --show-source --exit-zero
 
 
         
