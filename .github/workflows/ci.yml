@@ -42,11 +42,11 @@ jobs:
 
       - name: assert len(results) > 0
         run: |
-          python rag_system/test.py
+           rag_system/test.py
 
       - name: assert len(results) > 100
         run: |
-          python rag_system/test.py
+           rag_system/test.py
       
           
     
