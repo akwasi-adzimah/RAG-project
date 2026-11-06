@@ -26,7 +26,7 @@ log = logging.getLogger(__name__)
 Mode = Literal["hybrid", "keyword", "semantic"]
 MODES: tuple[Mode, ...] = ("hybrid", "keyword", "semantic")
 
-INDEX_VERSION = 3  # bump when chunking/cleaning logic changes
+INDEX_VERSION = 4  # bump when chunking/cleaning logic changes
 
 _TOKEN = re.compile(r"[a-z0-9]+(?:[.%][0-9]+)?%?")
 _STOPWORDS = frozenset(

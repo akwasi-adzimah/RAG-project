@@ -159,6 +159,9 @@ def chunk_text(text: str, chunk_words: int, overlap_words: int) -> list[str]:
                     break
                 overlap.insert(0, prev)
                 kept += w
+            # A long sentence may not fit next to the full overlap: drop overlap first.
+            while overlap and kept + n > chunk_words:
+                kept -= len(overlap.pop(0).split())
             current, count = overlap, kept
         current.append(sentence)
         count += n

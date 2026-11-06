@@ -67,8 +67,8 @@ The app has:
 ## Testing and evaluation
 
 ```bash
-pytest -m "not e2e"                  # 48 unit tests, offline and free, <2 s
-pytest -m e2e                        # 21 end-to-end tests against Claude (costs credits)
+pytest -m "not e2e"                  # 76 offline tests, free (this is what CI runs)
+pytest -m e2e                        # 20 end-to-end tests against Claude (costs credits)
 python -m rag_system.evaluate        # retrieval quality, free
 python -m rag_system.evaluate --answers   # + answer checks via Claude (costs credits)
 ```
@@ -79,7 +79,8 @@ python -m rag_system.evaluate --answers   # + answer checks via Claude (costs cr
 | `tests/test_index.py` | Tokenizing, each retrieval mode, fusion, reranking, cache invalidation |
 | `tests/test_pipeline.py` | Request shape, citations, retrieval-only mode, refusals, truncation, input validation, follow-up questions |
 | `tests/test_app.py` | The Streamlit app renders against the real index |
-| `tests/test_rag_system.py` | End-to-end: one test per case category (supported, paraphrase, ambiguous, unsupported, adversarial) plus a coverage check on the case set |
+| `tests/test_stable_components.py` | The deterministic parts on the **real** documents: evidence really is on the stated page, the scanned PDF is skipped, chunk limits, normalized embeddings, the evidence passage is retrieved in the top 6, retrieval is repeatable, the prompt carries the evidence, the no-key path; also checks the case set's category mix |
+| `tests/test_rag_system.py` | End-to-end: one test per case category (supported, paraphrase, ambiguous, unsupported, adversarial) |
 
 The unit tests use a fake embedder and a fake Claude client (`tests/conftest.py`),
 so they never touch the network.
@@ -104,7 +105,7 @@ passages:
 |---|---|---|
 | **hybrid + rerank** (default) | **100%** | **0.84** |
 | hybrid | 88% | 0.73 |
-| keyword only (old system) | 88% | 0.64 |
+| keyword only (old system) | 88% | 0.57 |
 | semantic only | 75% | 0.69 |
 
 With only 8 cases that have a known source, a single miss moves hit@6 by 12

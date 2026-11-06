@@ -41,6 +41,13 @@ def test_chunks_respect_size_and_overlap():
     assert all(s in joined for s in sentences)
 
 
+def test_overlap_never_pushes_a_chunk_over_the_limit():
+    # Regression: 10 words of overlap + a 48-word sentence used to make a 58-word chunk.
+    text = "Short sentence number one here. Another short one follows it. " + " ".join(["word"] * 48) + "."
+    chunks = chunk_text(text, chunk_words=50, overlap_words=10)
+    assert max(len(c.split()) for c in chunks) <= 50
+
+
 def test_chunks_end_on_sentence_boundaries():
     text = "Alpha beta gamma. Delta epsilon zeta. Eta theta iota. Kappa lambda mu."
     for chunk in chunk_text(text, chunk_words=6, overlap_words=0):

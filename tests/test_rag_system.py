@@ -30,17 +30,6 @@ def check(case):
     )
 
 
-def test_case_set_meets_coverage_requirements():
-    """4-5 supported, 2 paraphrases, and at least 1 each of the risk categories."""
-    counts = {t: len(cases_of(t)) for t in ("supported", "paraphrase", "ambiguous", "unsupported", "adversarial")}
-    assert len(CASES) >= 10, counts
-    assert 4 <= counts["supported"] <= 5, counts
-    assert counts["paraphrase"] == 2, counts
-    assert all(counts[t] >= 1 for t in ("ambiguous", "unsupported", "adversarial")), counts
-    ids = {c["id"] for c in CASES}
-    assert all(c["paraphrase_of"] in ids for c in cases_of("paraphrase"))
-
-
 @pytest.mark.parametrize("case", CASES, ids=lambda c: c.get("id", "case"))
 def test_chatbot_returns_nonempty_answer(case):
     answer = ask_chatbot(case["question"])
